@@ -3,7 +3,6 @@ from io import BytesIO
 from typing import List
 
 import json
-import matplotlib.pyplot as plt
 import pandas as pd
 import requests
 from dagster import AssetExecutionContext, MetadataValue, asset
