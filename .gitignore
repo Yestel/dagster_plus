@@ -27,3 +27,4 @@ wheels/
 *.ipynb
 .pytest_cache
 .tmp_dagster_home*
+.env
