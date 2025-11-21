@@ -1,43 +1,23 @@
 [tool.poetry]
 name = "crawler"
-# REMOVED: version = "0.1.0" 
-description = "Simple dasgter+"
+version = "0.1.0"
+description = "Simple dagster+"
 authors = ["quan.dao <quan.dao@definer-inc.com>"]
+readme = "README.md"
 
-# Add the standard [project] table for Hatchling/PEP 621 compliance
-[project]
-name = "crawler"
-version = "0.1.0" # <--- Define it here
-description = "Simple dasgter+"
-authors = [
-    { name = "quan.dao", email = "quan.dao@definer-inc.com" },
-]
-requires-python = ">=3.10,<3.14" # Copy Python constraint
-# Add all top-level dependencies here (requires list)
-dependencies = [
-    "dagster>=1.12.3,<2.0.0", 
-    "dagster-cloud>=1.12.3,<2.0.0",
-    "pandas>=2.3.3,<3.0.0", 
-    "snowflake-connector-python<4.0.0", 
-    "snowflake-sqlalchemy>=1.7.7,<2.0.0",
-]
+[tool.poetry.dependencies]
+python = ">=3.10,<3.14"
+dagster = ">=1.12.3,<2.0.0"
+dagster-cloud = ">=1.12.3,<2.0.0"
+pandas = ">=2.3.3,<3.0.0"
+snowflake-connector-python = { version = "<4.0.0", extras = ["pandas"] }
+snowflake-sqlalchemy = ">=1.7.7,<2.0.0"
 
-[project.optional-dependencies]
-dev = [
-    "dagster-dg-cli",
-    "dagster-webserver",
-    "pytest",
-]
+[tool.poetry.group.dev.dependencies]
+dagster-dg-cli = "*"
+dagster-webserver = "*"
+pytest = "*"
 
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
-
-[tool.dg]
-directory_type = "project"
-
-[tool.dg.project]
-root_module = "crawler"
-registry_modules = [
-    "crawler.components.*",
-]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
