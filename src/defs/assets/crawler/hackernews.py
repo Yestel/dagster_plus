@@ -7,7 +7,7 @@ import pandas as pd
 import requests
 from dagster import AssetExecutionContext, MetadataValue, asset
 
-from ..resources.snowflake_db import SnowflakeDB
+from defs.resources.snowflake_db import SnowflakeDB
 
 
 @asset(group_name="hackernews", compute_kind="HackerNews API")
@@ -57,7 +57,6 @@ def hackernews_topstories(
             "preview": MetadataValue.md(df.head().to_markdown()),
         }
     )
-    snowflake.write_dataframe(df, "stories")
+    upsert_keys = ['id']
+    snowflake.write_dataframe(df, "stories", upsert_keys)
     return df
-
-

@@ -1,6 +1,6 @@
 import os
 from dagster import EnvVar
-from crawler.defs.resources.postgres_db import PostgresDB
+from defs.resources.postgres_db import PostgresDB
 from sqlalchemy import text
 
 def test_connection():

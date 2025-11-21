@@ -1,5 +1,5 @@
 locations:
 - code_source:
-    package_name: crawler.definitions
-  working_directory: ./src/
+    package_name: src.definitions
+  working_directory: ./
   location_name: dagster_plus

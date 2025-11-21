@@ -3,7 +3,7 @@ import unittest
 from unittest.mock import MagicMock, patch
 
 from dagster import InputContext, OutputContext
-from crawler.defs.resources.io_manager import S3IOManager
+from defs.resources.io_manager import S3IOManager
 
 
 class TestS3IOManager(unittest.TestCase):

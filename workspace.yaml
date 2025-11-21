@@ -1,3 +1,3 @@
 load_from:
-  - python_package: crawler.definitions
+  - python_package: src.definitions
 
