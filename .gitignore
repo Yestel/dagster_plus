@@ -28,3 +28,4 @@ wheels/
 .pytest_cache
 .tmp_dagster_home*
 .env
+.venv
