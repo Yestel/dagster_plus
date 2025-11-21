@@ -7,6 +7,8 @@ dependencies = [
     "dagster-cloud",
     "boto3",
     "pandas",
+    "snowflake-sqlalchemy",
+    "snowflake-connector-python",
 ]
 
 [project.optional-dependencies]
