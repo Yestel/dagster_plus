@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "crawler"
+name = "dagster_plus"
 version = "0.1.0"
-description = "Simple dagster+"
+description = "Simple dagster_plus"
 authors = ["quan.dao <quan.dao@definer-inc.com>"]
 readme = "README.md"
 
