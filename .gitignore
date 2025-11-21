@@ -24,3 +24,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+*.ipynb
+.pytest_cache
+.tmp_dagster_home*
+.env
