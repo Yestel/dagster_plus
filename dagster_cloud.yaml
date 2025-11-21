@@ -2,4 +2,4 @@ locations:
 - code_source:
     package_name: crawler.definitions
   working_directory: ./src/
-  location_name: my-project
+  location_name: dagster_plus
