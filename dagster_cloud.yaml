@@ -1,5 +1,5 @@
 locations:
 - code_source:
-    package_name: src.definitions
-  working_directory: ./
+    package_name: dagster_plus.definitions
+  working_directory: ./src/
   location_name: dagster_plus

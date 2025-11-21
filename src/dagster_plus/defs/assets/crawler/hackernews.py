@@ -7,7 +7,7 @@ import pandas as pd
 import requests
 from dagster import AssetExecutionContext, MetadataValue, asset
 
-from defs.resources.snowflake_db import SnowflakeDB
+from dagster_plus.resources.snowflake_db import SnowflakeDB
 
 
 @asset(group_name="hackernews", compute_kind="HackerNews API")

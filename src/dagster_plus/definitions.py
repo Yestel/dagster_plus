@@ -1,7 +1,7 @@
 from pathlib import Path
 
 import dagster as dg
-from defs.resources.snowflake_db import SnowflakeDB
+from dagster_plus.resources.snowflake_db import SnowflakeDB
 
  
 @dg.definitions

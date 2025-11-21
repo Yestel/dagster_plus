@@ -3,7 +3,7 @@ import unittest
 from unittest.mock import MagicMock, patch
 
 from dagster import InputContext, OutputContext
-from defs.resources.io_manager import S3IOManager
+from dagster_plus.resources.io_manager import S3IOManager
 
 
 class TestS3IOManager(unittest.TestCase):
