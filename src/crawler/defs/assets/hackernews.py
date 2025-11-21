@@ -19,6 +19,7 @@ def hackernews_topstory_ids(context: AssetExecutionContext) -> List[int]:
     """
     newstories_url = "https://hacker-news.firebaseio.com/v0/topstories.json"
     top_500_newstories = requests.get(newstories_url).json()
+    top_500_newstories = top_500_newstories[:50]
     context.add_output_metadata(
         {
             "num_records": len(top_500_newstories),

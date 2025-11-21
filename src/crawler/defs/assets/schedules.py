@@ -6,7 +6,7 @@ def defs():
     return dg.Definitions(
         schedules=[
             dg.ScheduleDefinition(
-                job=dg.define_asset_job(name="all_assets_job"),
+                job=dg.define_asset_job(name="crawler_assets_job"),
                 cron_schedule="0 0 * * *",
             )
         ]
