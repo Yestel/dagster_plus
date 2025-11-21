@@ -125,3 +125,5 @@ class SnowflakeDB(ConfigurableResource):
         finally:
             cursor.close()
             conn.close()
+
+

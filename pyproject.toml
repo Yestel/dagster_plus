@@ -1,8 +1,3 @@
-[tool.poetry]
-name = "dagster_plus"
-description = "Simple ddagster_plus"
-authors = ["quan.dao <quan.dao@definer-inc.com>"]
-
 [project]
 name = "dagster_plus"
 version = "0.1.0"

@@ -1,7 +1,4 @@
-import base64
-from io import BytesIO
 from typing import List
-
 import json
 import pandas as pd
 import requests
@@ -28,11 +25,10 @@ def hackernews_topstory_ids(context: AssetExecutionContext) -> List[int]:
     return top_500_newstories
 
 
-@asset(group_name="hackernews", compute_kind="HackerNews API")
+@asset(group_name="hackernews", compute_kind="HackerNews API", required_resource_keys={"snowflake"})
 def hackernews_topstories(
     context: AssetExecutionContext, 
     hackernews_topstory_ids: List[int],
-    snowflake: SnowflakeDB
 ) -> pd.DataFrame:
     """Get items based on story ids from the HackerNews items endpoint. It may take 1-2 minutes to fetch all 500 items.
 
@@ -58,5 +54,5 @@ def hackernews_topstories(
         }
     )
     upsert_keys = ['id']
-    snowflake.write_dataframe(df, "stories", upsert_keys)
+    context.resources.snowflake.write_dataframe(df, "stories", upsert_keys)
     return df
