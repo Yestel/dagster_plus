@@ -8,7 +8,7 @@ import pandas as pd
 import requests
 from dagster import AssetExecutionContext, MetadataValue, asset
 
-from ..resources.postgres_db import PostgresDB
+from ..resources.snowflake_db import SnowflakeDB
 
 
 @asset(group_name="hackernews", compute_kind="HackerNews API")
@@ -33,7 +33,7 @@ def hackernews_topstory_ids(context: AssetExecutionContext) -> List[int]:
 def hackernews_topstories(
     context: AssetExecutionContext, 
     hackernews_topstory_ids: List[int],
-    postgres: PostgresDB
+    snowflake: SnowflakeDB
 ) -> pd.DataFrame:
     """Get items based on story ids from the HackerNews items endpoint. It may take 1-2 minutes to fetch all 500 items.
 
@@ -58,7 +58,7 @@ def hackernews_topstories(
             "preview": MetadataValue.md(df.head().to_markdown()),
         }
     )
-    postgres.write_dataframe(df, "stories")
+    snowflake.write_dataframe(df, "stories")
     return df
 
 

@@ -1,9 +1,8 @@
 from pathlib import Path
 
 import dagster as dg
+from crawler.defs.resources.snowflake_db import SnowflakeDB
 
-
-from crawler.defs.resources.postgres_db import PostgresDB
  
 @dg.definitions
 def defs():
@@ -11,7 +10,7 @@ def defs():
         dg.load_from_defs_folder(project_root=Path(__file__).parent.parent),
         dg.Definitions(
             resources={
-                "postgres": PostgresDB.configure_at_launch(),
+                "snowflake": SnowflakeDB.configure_at_launch(),
             }
         )
     )
