@@ -6,8 +6,8 @@ authors = ["quan.dao <quan.dao@definer-inc.com>"]
 
 [tool.poetry.dependencies]
 python = ">=3.10,<3.14"
-dagster = "^1.12.3"
-dagster-cloud = "^1.12.3"
+dagster = "~1.12.3" # Changed from ^1.12.3
+dagster-cloud = "~1.12.3" # Changed from ^1.12.3
 pandas = "^2.3.3"
 snowflake-connector-python = "<4.0.0"
 snowflake-sqlalchemy = "^1.7.7"
