@@ -1,16 +1,32 @@
-[tool.poetry]
-name = "dagster_plus"
-description = "Simple dagster_plus"
-authors = ["quan.dao <quan.dao@definer-inc.com>"]
+[build-system]
+requires = [
+    "setuptools>=61.2",
+]
+build-backend = "setuptools.build_meta"
 
 [project]
-name = "dagster_plus"
-version = "0.1.0"
-description = "Simple dagster_plus"
-authors = [
-    { name = "quan.dao", email = "quan.dao@definer-inc.com" },
-]
+name = "dagster-cloud"
 requires-python = ">=3.10,<3.14"
+dynamic = [
+    "version",
+]
+authors = [
+    { name = "Elementl", email = "support@elementl.com" },
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "Intended Audience :: System Administrators",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "License :: OSI Approved :: Apache Software License",
+    "Topic :: System :: Monitoring",
+    "Topic :: Software Development :: Libraries :: Application Frameworks",
+    "Operating System :: OS Independent",
+]
 dependencies = [
     "dagster>=1.12.3,<2.0.0",
     "dagster-cloud>=1.12.3,<2.0.0",
@@ -26,15 +42,11 @@ dev = [
     "pytest",
 ]
 
-[build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+[tool.setuptools]
+include-package-data = true
 
-[tool.dg]
-directory_type = "project"
-
-[tool.dg.project]
-root_module = "src"
-registry_modules = [
-    "src.components.*",
+[tool.setuptools.packages.find]
+exclude = [
+    "tests*",
 ]
+namespaces = false
