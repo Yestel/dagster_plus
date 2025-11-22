@@ -3,10 +3,8 @@ import pandas as pd
 import requests
 from dagster import AssetExecutionContext, MetadataValue, asset
 
-from dagster_plus.resources.snowflake_db import SnowflakeDB
 
-
-@asset(group_name="todos", compute_kind="Todos API", required_resource_keys={"snowflake"})
+@asset(group_name="todos", compute_kind="Todos API", required_resource_keys={"postgres"})
 def todos_list(context: AssetExecutionContext) -> pd.DataFrame:
     """Get up to 50 todos from the Todos API."""
     todos_url = 'https://jsonplaceholder.typicode.com/todos'
@@ -20,5 +18,5 @@ def todos_list(context: AssetExecutionContext) -> pd.DataFrame:
     )
     df = pd.DataFrame(todos)
     upsert_keys = ['id']
-    context.resources.snowflake.write_dataframe(df, "todos", upsert_keys)
+    context.resources.postgres.write_dataframe(df, "todos", upsert_keys)
     return df

@@ -1,21 +1,18 @@
 from typing import List
 import json
 import pandas as pd
-import requests
 from dagster import AssetExecutionContext, MetadataValue, asset
 
-from dagster_plus.resources.snowflake_db import SnowflakeDB
 
-
-@asset(group_name="hackernews", compute_kind="HackerNews API")
-def hackernews_topstory_ids(context: AssetExecutionContext) -> List[int]:
+@asset(group_name="hackernews", compute_kind="HackerNews API", required_resource_keys={"async_crawler"})
+async def hackernews_topstory_ids(context: AssetExecutionContext) -> List[int]:
     """Get up to 500 top stories from the HackerNews topstories endpoint.
 
     API Docs: https://github.com/HackerNews/API#new-top-and-best-stories
     """
+    async_crawler = context.resources.async_crawler
     newstories_url = "https://hacker-news.firebaseio.com/v0/topstories.json"
-    top_500_newstories = requests.get(newstories_url).json()
-    top_500_newstories = top_500_newstories[:50]
+    top_500_newstories = await async_crawler.get(newstories_url)
     context.add_output_metadata(
         {
             "num_records": len(top_500_newstories),
@@ -25,8 +22,8 @@ def hackernews_topstory_ids(context: AssetExecutionContext) -> List[int]:
     return top_500_newstories
 
 
-@asset(group_name="hackernews", compute_kind="HackerNews API", required_resource_keys={"snowflake"})
-def hackernews_topstories(
+@asset(group_name="hackernews", compute_kind="HackerNews API", required_resource_keys={"async_crawler", "postgres"})
+async def hackernews_topstories(
     context: AssetExecutionContext, 
     hackernews_topstory_ids: List[int],
 ) -> pd.DataFrame:
@@ -34,12 +31,16 @@ def hackernews_topstories(
 
     API Docs: https://github.com/HackerNews/API#items
     """
-    results = []
-    for item_id in hackernews_topstory_ids:
-        item = requests.get(f"https://hacker-news.firebaseio.com/v0/item/{item_id}.json").json()
-        results.append(item)
-        if len(results) % 20 == 0:
-            context.log.info(f"Got {len(results)} items so far.")
+    async_crawler = context.resources.async_crawler
+    postgres = context.resources.postgres
+
+    urls = [f"https://hacker-news.firebaseio.com/v0/item/{item_id}.json" for item_id in hackernews_topstory_ids[:50]]
+    results = await async_crawler.fetch_all(urls)
+    
+    # Filter out None results if any failed
+    results = [r for r in results if r is not None]
+    
+    context.log.info(f"Got {len(results)} items.")
 
     df = pd.DataFrame(results)
 
@@ -54,5 +55,5 @@ def hackernews_topstories(
         }
     )
     upsert_keys = ['id']
-    context.resources.snowflake.write_dataframe(df, "stories", upsert_keys)
+    postgres.write_dataframe(df, "stories", upsert_keys)
     return df

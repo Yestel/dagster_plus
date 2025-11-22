@@ -18,5 +18,6 @@ def defs():
         schedules=[
             schedule_asset_group("todos", "0 0 * * *"),
             schedule_asset_group("hackernews", "0 1 * * *"),
+            schedule_asset_group("github", "0 2 * * *"),
         ]
     )
